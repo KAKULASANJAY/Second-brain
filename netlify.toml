@@ -1,0 +1,43 @@
+# =============================================================================
+# NETLIFY CONFIGURATION FOR SECOND BRAIN
+# =============================================================================
+# This file configures the Netlify build and deployment settings.
+# DO NOT add secrets here - use Netlify Dashboard for environment variables.
+
+[build]
+  # Build command for Next.js
+  command = "npm run build"
+  
+  # Output directory for Next.js (Netlify auto-detects .next)
+  publish = ".next"
+
+[build.environment]
+  # Node version
+  NODE_VERSION = "18"
+  
+  # Required for Next.js on Netlify
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# =============================================================================
+# NEXT.JS RUNTIME PLUGIN
+# =============================================================================
+# Essential for Next.js App Router + API Routes on Netlify
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# =============================================================================
+# HEADERS FOR PUBLIC API (CORS)
+# =============================================================================
+
+[[headers]]
+  for = "/api/public/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+
+# =============================================================================
+# REDIRECTS (SPA fallback not needed for Next.js)
+# =============================================================================
+# Next.js handles routing automatically
